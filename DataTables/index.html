@@ -1,0 +1,455 @@
+
+<html>
+
+<head>
+    <title>CommOps SmartWork</title>
+
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/semantic.min.css">   
+    <link rel="icon" href="static/favicon.ico" type="image/x-icon">  
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9/dist/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.0/css/dataTables.semanticui.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.semanticui.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.3/css/select.semanticui.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"> 
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/semantic.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> 
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.0/js/dataTables.semanticui.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.semanticui.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.semanticui.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<style>
+    body {
+	    color:#404E67;
+	    background: #F5F7FA;
+	    font-family: 'Open Sans' , sans-serif;
+    }
+    .table-wrapper {
+	width:700px;
+        margin:30px auto;
+        background:#fff;
+        padding:  20px;
+        box-shadow: 0 1px 1px rgb(0,0,0,05); 
+    }
+    .table-title {
+	    padding-bottom: 10px;
+		    margin:0 0 10px;
+    }
+    .table-title h2 {
+	    margin:6px 0 0;
+	    font-size: 22px;
+    }
+    .table-title .add-new {
+	    float: right;
+        height:30px;
+	    font-weight:bold;
+	    font-size: 12px;
+	    text-shadow: none;
+            min-width:100px;
+	    border-radius: 50px;
+	    line-height: 13px;
+		} 
+     .table-title .add-new i {
+	     margin-right:4px;
+     } 
+     table.table {
+	     table-layout:fixed;
+     }
+     table.table tr th,
+     table.table tr td{
+	     border-color: #e9e9e9;
+     }
+     table.table td a {
+	     cursor: pointer;
+	     display: inline-block;
+	     margin: 0 5px;
+             min-width: 24px; 
+     }
+     table.table td a.add {
+	     color:#27C46B;
+     }
+     table.table td a.edit {
+	     color:#FFC107;
+     }
+     table.table td a.delete {
+	     color: #E34724 ;
+     }
+     table.table td i {
+	     font-size:19px;
+     }
+     table.table td a.add i {
+	     font-size:24px;
+	     margin-right:-1px;
+	     position: relative;
+             top: 3px; 
+     }
+     table.table .form-control {
+	     height: 32px;
+             line-height:32px;
+             box-shadow:none;
+	     border-radius: 2px;
+     } table.table .form-control.error { 
+	     border-color: #f50000;
+     }
+     table.table td .add {
+	     display: none;
+     }
+
+    .ui.modal.trucklistmodal {
+        top: 10%;
+    }
+    
+    .ui.modal.addusermodel {
+        top: 10%;
+    }
+    
+    .ui.table td.critical,
+    .ui.table th.critical,
+    .critical {
+        background: #FF0000;
+    }
+    
+    .ui.table td.high,
+    .ui.table th.high {
+        background: #BC8F8F;
+    }
+    
+    .ui.table td.medium,
+    .ui.table th.medium {
+        background: #FFFF00;
+    }
+    
+    .ui.table td.low,
+    .ui.table th.low {
+        background: #32CD32;
+    }
+    
+    .workwindow {
+        width: 100%;
+    }
+    
+    .boldtext {
+        font-weight: bold;
+    }
+    
+    .amber {
+        background-color: rgba(255, 128, 0, 0.15);
+        color: #f2711c;
+    }
+    
+    .med {
+        background-color: rgba(255, 255, 0, 0.15);
+        color: #767676;
+    }
+    
+    .gray {
+        background-color: rgba(120, 120, 120, 0.15);
+        color: #767676;
+    }
+    
+    .popuptxt:hover {
+        cursor: pointer;
+    }
+    
+    .hidden {
+        display: none;
+    }
+    
+    .redborder {
+        border-color: #DF9F9B !important;
+    }
+    
+    .ui.button.submit {
+        background-color: #65C18C !important;
+        color: white !important;
+        height: line-height;
+        text-align: center;
+    }
+    
+    .ui.button.saveall {
+        background-color: #2185d0 !important;
+        color: white !important;
+        float: right;
+    }
+    
+    .ui.button.clearfilter {
+        background-color: #df5959 !important;
+        color: white !important;
+    }
+    
+    .ui.button.delete {
+        background-color: #df5959 !important;
+        color: white !important;
+    }
+    
+    .ui.table td.critical,
+    .ui.table th.critical {
+        background-color: rgba(255, 0, 0, 0.6);
+        font-weight: bold;
+    }
+    
+    .ui.table td.low,
+    .ui.table th.low {
+        background-color: rgba(0, 255, 0, 0.6);
+        font-weight: bold;
+    }
+    
+    .ui.table td.medium,
+    .ui.table th.medium {
+        background-color: rgba(255, 255, 0, 0.6);
+        font-weight: bold;
+    }
+    
+    .ui.table td.high,
+    .ui.table th.high {
+        background-color: rgba(255, 128, 0, 0.6);
+        font-weight: bold;
+    }
+
+    #data-table {
+        margin: 20px 0;
+    }
+
+    div.top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+    }
+    
+    div.top>div {
+        display: flex;
+    }
+    
+    div.left-col>div {
+        margin-left: 5px !important;
+    }
+    
+    div.right-col>div {
+        margin-right: 5px !important;
+    }
+    
+    div.tools>div {
+        margin-left: 5px !important;
+    }
+    
+    .popup {
+        position: relative;
+        text-align: center;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    /* The actual popup */
+    
+    .popup .popuptext {
+        visibility: hidden;
+        width: 160px;
+        background-color: #555	;
+	color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 8px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -80px;
+    }
+
+</style>
+<body>
+
+    <div class="ui container" >
+       	<p>
+		<h1 align="center">    <b>Summary </b>   <i class="clipboard check icon" style="visibility: visible;">  </i>   </h1>       
+	</p>
+	<div class="ui container">
+    <button id="switchTable" style="width:10%;margin-top:5px;" type="button" class="ui primary button  ui left floated button"><i class=" history icon"></i> History </button>
+    <br>
+	</div>
+
+
+
+
+<div class="ui container">
+    <button  id="openModalButton"  style="width:25%;margin-top:10px;" type="button" class="ui primary button  ui right floated button"><i class=" plus icon"></i> Add New </button>
+    <br>
+</div>
+<br><br>
+
+
+
+<!-- Pop-up for  Window one button  -->
+  <div class="ui tiny modal"  id="mypopup"  style="border-top: 30px solid red; max-width: 350px; width: 100%; display: none !important;height:auto;">
+    <div class="content">
+      <div class="center aligned content  header" style="margin-top:-47px; color:white;">
+              <h3 class="ui center subject"> <div class="title" <i class="trash alternate icon"></i> Delete</div></h3>
+      </div>
+      <div class="description center aligned content" style="margin-top:50px;">Are you sure you want to delete this item?</div>
+    </div>
+      <div class="extra content">
+      <div class="ui two buttons">
+        <div class="ui basic button" style="margin-left:10px auto;;max-width: 100px;max-height: 50px;height: 100%;width: 100%; text-align: center;"  id="cancel_btn"> Cancel </div>
+      <div class="ui basic  button" style="margin-left: 100px;max-width: 100px;max-height: 50px;height: 100%;width: 100%; text-align: center;"  id="delete_btn">Delete</div>  
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--  Summary  Modal -->
+<div id="myModal" class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">
+        Employee Details
+    </div>
+    <div class="content">
+        <div class="ui form" id="modal_data" >
+		<div class="field">
+			<label>Driver: </label>
+			<select name="DriversList" id="DriverList">
+			</select>
+		</div>
+		<div class="field">
+			<label>Driver Status: </label>
+			<select name="DriverStatus" id="driverStatus">
+			</select>
+		</div>
+		<div class="field">
+			<label>Origin: </label>
+			<label name="origin" id="Origin"> </label> 
+		</div>
+		<div class="field">
+			<label>Vehicle: </label>
+			<select name="VehiclesList" id="VehicleList">
+			</select>
+		</div>
+		<div class="field">
+			<label>Site: </label>
+			<select name="SitesList" id="SiteList">
+			</select>
+		</div>
+		<div class="field">
+			<div style="float:left; display:inline; width: 49%;">
+				<label><b>Tripsite Start: </b></label>
+				<input type="datetime-local" id="tripSiteStart" required />
+			</div>
+			<div style="float:left; display:inline; width: 49%;">
+				<label><b>Tripsite End: </b></label>
+				<input type="datetime-local" id="tripSiteEnd" required  />
+			</div>
+		</div>
+		<div class="field"></div>
+		<div class="field">
+			<div style="float:left; display:inline; width: 49%;">
+				<label><b>Tripreturn Start:</b></label>
+				<input type="datetime-local" id="tripReturnStart" required />
+			</div>
+			<div style="float:left; display:inline; width: 49%;">
+				<label><b>Tripreturn End: </b></label>
+				<input type="datetime-local" id="tripReturnEnd" required />
+			</div>
+		</div>
+		<div class="field"></div>
+		<div class="field">   
+			<label> Remark: </label>
+			<input type="text" id="remarks" placeholder="" required  >
+		</div>
+	</div>
+    </div>
+    <!-- Action -->
+ 	
+    	<div class="actions">
+            <div class="ui button close" id="closeModalButton">Close</div>
+            <div class="ui primary button add-new" id="saveModalButton">Add Record</div>
+        </div>
+    <!-- removed here  -->     
+    </div>
+
+
+
+<!-- CallChecks  Modal -->
+<div id="myModal2" class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">
+        New Record
+    </div>
+    <div class="content">
+        <form class="ui form" id="modal_data2">
+		
+	    <div class="field">
+                <label>Caller: </label>
+                <input type="text" id="RecordCaller" placeholder="Record's Caller" required  />
+            </div>
+
+            <div class="field">
+                <label>TYPE: </label>
+                <input type="number" id="RecordType" placeholder="Record's Type" required  />
+            </div>
+	    <div class="field">
+		<label> Date: </labe>
+		    <input type="datetime-local" id="RecordDate" required  />
+	    </div>
+            <div class="field">
+                <label >Remark: </label>
+                <input type="text" id="RecordRemark" placeholder="Record's Remark" required  />
+            </div>
+        </form>
+    </div>
+
+<!-- Actions --> 
+
+	<div class="actions">
+            <div class="ui button close" id="closeModalBtn2">Close</div>
+            <div class="ui primary button   saveModalBtn2 " id="saveModalBtn2">Add Record</div>
+        </div>
+</div>
+
+<!-- End Container -->
+
+    <!-- Start Table -->
+    <table class="ui celled table" id="EmpTable" style="margin-top: 2%; width:100%;text-align: center;">
+        <thead>
+            <tr>
+		<th>  </th> 
+                <th> # </th>
+                <th>Driver</th>
+                <th>Status</th>
+                <th>Orgin</th>
+                <th>Vehicle</th>
+		<th>SITE</th> 
+		<th>Trip Site Start</th>
+		<th>Trip Site End</th> 
+		<th>Trip Return Start</th> 
+		<th>Trip Return End</th>
+		<th>Remarks</th>
+		<th>Actions</th>
+            </tr>
+        </thead> 
+        <tbody style="word-break: break-word; word-break: break-all; white-space: normal;">
+		<td class="details-control"></td>
+        </tbody>
+    </table>
+
+
+    </div>
+    </div>
+
+    <script   type="text/javascript" src="script.js" ></script>
+</html>
+</body>
+
